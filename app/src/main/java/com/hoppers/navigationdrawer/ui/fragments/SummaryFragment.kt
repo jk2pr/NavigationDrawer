@@ -19,7 +19,7 @@ import com.hoppers.navigationdrawer.ui.adapters.MySummaryRecyclerViewAdapter
 
 class SummaryFragment : Fragment() {
 
-    // TODO: Customize parameters
+
     private val data: Json4Kotlin_Base by lazy {
         Gson().fromJson(arguments?.getString(INTENT_KEYS.data), Json4Kotlin_Base::class.java)
     }

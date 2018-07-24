@@ -8,4 +8,4 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     tools:context=".ui.fragments.SummaryFragment"
-    tools:listitem="@layout/fragment_summary" />
+    tools:listitem="@layout/item_summary" />

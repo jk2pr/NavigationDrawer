@@ -6,6 +6,7 @@ import com.hoppers.navigationdrawer.di.modules.NetworkModule
 import com.hoppers.navigationdrawer.ui.activities.MainActivity
 import com.hoppers.navigationdrawer.ui.fragments.SummaryFragment
 import com.hoppers.navigationdrawer.viewmodel.AccountViewModel
+import com.hoppers.navigationdrawer.viewmodel.TransactionViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -18,6 +19,7 @@ interface AppComponent {
     fun inject(networkModule: NetworkModule)
 
     fun inject(userViewModel: AccountViewModel)
+    fun inject(userViewModel: TransactionViewModel)
 
 
 }

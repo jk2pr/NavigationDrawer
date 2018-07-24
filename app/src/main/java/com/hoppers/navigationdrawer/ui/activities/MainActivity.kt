@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onListFragmentInteraction(item: Accounts?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (container.currentItem == 0)
+            container.currentItem = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initViewPager(t: Json4Kotlin_Base?) {
         container?.adapter = PageAdapter(supportFragmentManager, t!!)
         tabs?.setupWithViewPager(container)
-        container?.offscreenPageLimit = tabs.tabCount
+      //  container?.offscreenPageLimit = tabs.tabCount
 
 
     }

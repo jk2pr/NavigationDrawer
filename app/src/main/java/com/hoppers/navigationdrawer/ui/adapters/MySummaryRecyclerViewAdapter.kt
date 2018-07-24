@@ -11,7 +11,7 @@ import com.hoppers.navigationdrawer.R
 import com.hoppers.navigationdrawer.model.Accounts
 import com.hoppers.navigationdrawer.model.Json4Kotlin_Base
 import com.hoppers.navigationdrawer.ui.fragments.SummaryFragment.OnListFragmentInteractionListener
-import kotlinx.android.synthetic.main.fragment_summary.view.*
+import kotlinx.android.synthetic.main.include_item.view.*
 
 class MySummaryRecyclerViewAdapter(
         private val mValues: Json4Kotlin_Base,
@@ -29,7 +29,7 @@ class MySummaryRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_summary, parent, false)
+                .inflate(R.layout.item_summary, parent, false)
         return ViewHolder(view)
     }
 
@@ -39,13 +39,14 @@ class MySummaryRecyclerViewAdapter(
         holder.currentBalance.text = item.currentBalance
         holder.availableBalance.text = String.format(holder.mView.context.getString(R.string.available, item.availableBalance))
         holder.accountNumber.text = String.format(holder.mView.context.getString(R.string.current, item.accountNumber))
+        enableClick(holder.mView, item)
         enableClick(holder.img_left, item)
         enableClick(holder.img_right, item)
 
 
     }
 
-    private fun enableClick(img: ImageView, item: Accounts) {
+    private fun enableClick(img: View, item: Accounts) {
         with(img) {
             tag = item
             setOnClickListener(mOnClickListener)
