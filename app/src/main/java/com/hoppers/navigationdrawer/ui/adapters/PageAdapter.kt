@@ -16,7 +16,7 @@ import com.hoppers.navigationdrawer.ui.fragments.SummaryFragment
 
 class PageAdapter(fm: FragmentManager, private val data: Json4Kotlin_Base) : FragmentStatePagerAdapter(fm) {
 
-    private var registeredFragments = SparseArray<Fragment>()
+     var registeredFragments = SparseArray<Fragment>()
 
     override fun getItem(position: Int): Fragment? {
         val bundl = Bundle()

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.google.gson.Gson
 import com.hoppers.navigationdrawer.R
 import com.hoppers.navigationdrawer.constants.INTENT_KEYS
+import com.hoppers.navigationdrawer.model.Accounts
 import com.hoppers.navigationdrawer.model.Json4Kotlin_Base
 import com.hoppers.navigationdrawer.model.Transactions
 import com.hoppers.navigationdrawer.ui.adapters.TransactionRecyclerViewAdapter
@@ -40,12 +41,6 @@ class AccountFragment : Fragment(), Observer<Transactions> {
 
     private fun updateUi(t: Transactions?) {
         showLoader(false)
-        val item = data.accounts[0]
-        accountLabel.text = item.accountLabel
-        currentBalance.text = item.currentBalance
-        availableBalance.text = String.format(getString(R.string.available, item.availableBalance))
-        accountNumber.text = String.format(getString(R.string.current, item.accountNumber))
-
         val tra = t?.transactions?.groupBy {
             it.date
         }
@@ -53,6 +48,7 @@ class AccountFragment : Fragment(), Observer<Transactions> {
         recycler_expanded.apply {
             layoutManager =
                     LinearLayoutManager(context)
+            isNestedScrollingEnabled = false
             adapter = TransactionRecyclerViewAdapter(tra, null)
         }
 
@@ -61,11 +57,15 @@ class AccountFragment : Fragment(), Observer<Transactions> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         model.liveData.observe(this, this)
-        getAllTransactions()
 
     }
 
+    fun fetchData(index: Accounts?) {
+        getAllTransactions(data.accounts.indexOf(index))
+    }
+
     private fun showLoader(isVisible: Boolean) {
+        no_ac_selected.visibility = View.GONE
         if (isVisible) {
             loader.visibility = View.VISIBLE
             main_content.visibility = View.GONE
@@ -76,16 +76,21 @@ class AccountFragment : Fragment(), Observer<Transactions> {
 
     }
 
-    private fun getAllTransactions() {
+    private fun getAllTransactions(index: Int) {
         showLoader(true)
-        val u = model.getAllTransactions(data.accounts[0].transactions).subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe({
+        val u = model.getAllTransactions(data.accounts[index].transactions).subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe({
+            val item = data.accounts[index]
+            accountLabel.text = item.accountLabel
+            currentBalance.text = item.currentBalance
+            availableBalance.text = String.format(getString(R.string.available, item.availableBalance))
+            accountNumber.text = String.format(getString(R.string.current, item.accountNumber))
             model.liveData.value = it.body()
         }, { it ->
             print(it)
         }, {
 
         })
-     //   subscriptions.add(u)
+        //   subscriptions.add(u)
     }
 }
 

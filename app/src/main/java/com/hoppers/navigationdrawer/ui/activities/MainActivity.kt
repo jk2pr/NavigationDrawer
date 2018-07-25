@@ -14,6 +14,7 @@ import com.hoppers.navigationdrawer.R
 import com.hoppers.navigationdrawer.model.Accounts
 import com.hoppers.navigationdrawer.model.Json4Kotlin_Base
 import com.hoppers.navigationdrawer.ui.adapters.PageAdapter
+import com.hoppers.navigationdrawer.ui.fragments.AccountFragment
 import com.hoppers.navigationdrawer.ui.fragments.SummaryFragment
 
 import com.hoppers.navigationdrawer.viewmodel.AccountViewModel
@@ -33,8 +34,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onListFragmentInteraction(item: Accounts?) {
-        if (container.currentItem == 0)
+        if (container.currentItem == 0) {
             container.currentItem = 1
+            ((container.adapter as PageAdapter).registeredFragments.get(1) as AccountFragment).fetchData(item)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +90,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initViewPager(t: Json4Kotlin_Base?) {
         container?.adapter = PageAdapter(supportFragmentManager, t!!)
         tabs?.setupWithViewPager(container)
-      //  container?.offscreenPageLimit = tabs.tabCount
+        //  container?.offscreenPageLimit = tabs.tabCount
 
 
     }
